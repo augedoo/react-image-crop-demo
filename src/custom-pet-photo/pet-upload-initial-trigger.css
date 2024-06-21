@@ -1,0 +1,26 @@
+.initial-upload-trigger {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 50%;
+  background-color: aqua;
+  color: black;
+  position: relative;
+  
+  button {
+    width: 4rem;
+    height: 4rem;
+    background-color: white;
+    border: 2px solid black;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-radius: 50%;
+    transform: translate(25%, 25%);
+
+    /* Icon */
+    svg {
+      height: 75%;
+      width: 75%;
+    }
+  }
+}

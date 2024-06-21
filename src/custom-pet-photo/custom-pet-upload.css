@@ -1,0 +1,22 @@
+.Crop-Controls {
+  margin-bottom: 10px;
+}
+.Crop-Controls > * {
+  margin-bottom: 3px;
+}
+img {
+  max-width: 100%;
+}
+
+.main-container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+
+  
+}
+
+

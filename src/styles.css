@@ -3,13 +3,22 @@
   padding: 16px;
 }
 
-.Crop-Controls {
-  margin-bottom: 10px;
-}
-.Crop-Controls > * {
-  margin-bottom: 3px;
+.Modal {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  bottom: 40px;
+  max-width: 500px;
+  margin : auto;
+  background-color: papayawhip;
 }
 
-img {
-  max-width: 100%;
+.Modal-Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000bb;
 }
