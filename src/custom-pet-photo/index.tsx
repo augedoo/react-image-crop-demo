@@ -14,7 +14,7 @@ const CustomPetPhoto = () => {
   const [crop, setCrop] = useState<Crop>()
   const [isModalOpen, setModalOpen] = React.useState(false)
   const [error, setError] = React.useState('')
-  const avatarUrl = useRef('https://avatarfiles.alphacoders.com/161/161002.jpg')
+  const avatarUrl = useRef('')
   const closeModal = () => setModalOpen(false)
 
   const updateAvatar = (imgUrl: string) => {
@@ -51,7 +51,13 @@ const CustomPetPhoto = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100vw',
+      }}
+    >
       <PetProfileAvatar
         onSelectFile={onSelectFile}
         avatarUrl={avatarUrl.current}

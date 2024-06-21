@@ -2,7 +2,7 @@
   height: 10rem;
   width: 10rem;
   border-radius: 50%;
-  background-color: aqua;
+  background-color: #297fdb;
   color: black;
   position: relative;
 
@@ -15,6 +15,15 @@
   .pet-initial-avatar {
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      height: 6rem;
+      width: 6rem;
+      fill: white;
+    }
   }
   
   button {
