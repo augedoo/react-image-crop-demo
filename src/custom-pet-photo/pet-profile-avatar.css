@@ -1,10 +1,21 @@
-.initial-upload-trigger {
+.profile-avatar-trigger {
   height: 10rem;
   width: 10rem;
   border-radius: 50%;
   background-color: aqua;
   color: black;
   position: relative;
+
+  img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+  }
+
+  .pet-initial-avatar {
+    height: 100%;
+    width: 100%;
+  }
   
   button {
     width: 4rem;

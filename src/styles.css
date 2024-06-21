@@ -1,3 +1,9 @@
+:root {
+  box-sizing: border-box;
+  padding: 0px;
+  max-width: 0px;
+}
+
 .App {
   font-family: sans-serif;
   padding: 16px;
@@ -9,9 +15,13 @@
   left: 40px;
   right: 40px;
   bottom: 40px;
-  max-width: 500px;
+  max-height: -moz-fit-content;
+  max-width: -moz-fit-content;
+  max-width:  fit-content;
+  max-height: fit-content;
   margin : auto;
-  background-color: papayawhip;
+  background-color: white;
+  border-radius: 0.5rem;
 }
 
 .Modal-Overlay {

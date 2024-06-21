@@ -1,49 +1,62 @@
 import React, { useRef, useState } from 'react'
-import PetPhotoCropper from './pet-photo-cropper'
-import Modal from 'react-modal'
-import ReactCrop, {
-  centerCrop,
-  makeAspectCrop,
-  Crop,
-  PixelCrop,
-  convertToPixelCrop,
-} from 'react-image-crop'
-import { canvasPreview } from './canvasPreview'
-import { useDebounceEffect } from './useDebounceEffect'
+import { Crop } from 'react-image-crop'
 
 import 'react-image-crop/dist/ReactCrop.css'
 import './custom-pet-upload.css'
-import PetUploadInitialTrigger from './pet-upload-initial-trigger'
+import PetProfileAvatar from './pet-profile-avatar'
 import ReactModal from 'react-modal'
+import PetImageCropper, { MIN_WIDTH_DIMENSION } from './pet-image-cropper'
+
+export const MODAL_MAX_WIDTH = 500
 
 const CustomPetPhoto = () => {
   const [imgSrc, setImgSrc] = useState('')
-  const imgRef = useRef<HTMLImageElement>(null)
   const [crop, setCrop] = useState<Crop>()
   const [isModalOpen, setModalOpen] = React.useState(false)
+  const [error, setError] = React.useState('')
+  const avatarUrl = useRef('https://avatarfiles.alphacoders.com/161/161002.jpg')
+  const closeModal = () => setModalOpen(false)
 
-  const handleOnSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setCrop(undefined) // Makes crop preview update between images.
-      const reader = new FileReader()
-      reader.addEventListener('load', () => {
-        setImgSrc(reader.result?.toString() || '')
-        setModalOpen(true)
+  const updateAvatar = (imgUrl: string) => {
+    avatarUrl.current = imgUrl
+  }
+
+  const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.addEventListener('load', () => {
+      const imageElement = new Image()
+      const imageUrl = reader.result?.toString() || ''
+      imageElement.src = imageUrl
+
+      imageElement.addEventListener('load', (e) => {
+        if (error) setError('')
+        const { naturalWidth, naturalHeight } = e.currentTarget as any
+        if (
+          naturalWidth < MIN_WIDTH_DIMENSION ||
+          naturalHeight < MIN_WIDTH_DIMENSION
+        ) {
+          setError(
+            `Image must be at least ${MIN_WIDTH_DIMENSION} x ${MIN_WIDTH_DIMENSION} pixels.`,
+          )
+          return setImgSrc('')
+        }
       })
-      reader.readAsDataURL(e.target.files[0])
-    }
+      setImgSrc(reader.result?.toString() || '')
+      setModalOpen(true)
+    })
+    reader.readAsDataURL(file)
   }
 
   return (
     <div>
-      <div>
-        <PetUploadInitialTrigger
-          setCrop={setCrop}
-          setImgSrc={setImgSrc}
-          onSelectFile={handleOnSelectFile}
-        />
-      </div>
-      {/* 
+      <PetProfileAvatar
+        onSelectFile={onSelectFile}
+        avatarUrl={avatarUrl.current}
+      />
+
       <ReactModal
         isOpen={isModalOpen}
         contentLabel="onRequestClose Example"
@@ -51,21 +64,16 @@ const CustomPetPhoto = () => {
         className="Modal"
         overlayClassName="Modal-Overlay"
       >
-        <div style={{
-          height: "100%",
-          width: "100%",
-          display: 'flex',
-        }}>
-
-        <PetPhotoCropper crop={crop} setCrop={setCrop} imgSrc={imgSrc} setImgSrc={setImgSrc}   />
-        </div>
-      </ReactModal> */}
-      <PetPhotoCropper
-        crop={crop}
-        setCrop={setCrop}
-        imgSrc={imgSrc}
-        setImgSrc={setImgSrc}
-      />
+        <PetImageCropper
+          onSelectFile={onSelectFile}
+          crop={crop}
+          setCrop={setCrop}
+          imgSrc={imgSrc}
+          setImgSrc={setImgSrc}
+          updateAvatar={updateAvatar}
+          closeModal={closeModal}
+        />
+      </ReactModal>
     </div>
   )
 }
